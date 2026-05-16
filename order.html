@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Your Piece — Shape of Your Love</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<script src="https://www.paypal.com/sdk/js?client-id=AaXeVD6pcsQHk7-Kriadn7wv0UNlFZ4a80e6FVeBuc4SO6c_cfKXGr_rRUhRKgPxJEd0JSfUatnMVnsO&currency=USD"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --cream:#F7F3EE;--cream-dark:#EDE6DB;--cream-mid:#F2EDE5;
+  --ink:#1C1A17;--ink-soft:#4A4540;
+  --gold:#A8895A;--gold-light:#C9A96E;
+  --line:rgba(28,26,23,0.12);
+  --success:#4A7C59;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(247,243,238,0.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);text-decoration:none;}
+.nav-back{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;font-weight:300;display:flex;align-items:center;gap:.5rem;transition:color .3s;}
+.nav-back:hover{color:var(--gold);}
+.nav-back::before{content:'←';}
+
+/* PROGRESS BAR */
+.progress-wrap{padding:5.5rem 0 0;background:var(--cream);}
+.progress-bar{display:flex;align-items:center;justify-content:center;padding:1.5rem 2rem;gap:0;border-bottom:1px solid var(--line);overflow-x:auto;}
+.progress-step{display:flex;align-items:center;gap:.6rem;cursor:pointer;}
+.progress-step.clickable:hover .step-circle{border-color:var(--gold);color:var(--gold);}
+.step-circle{width:1.8rem;height:1.8rem;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:400;letter-spacing:.05em;color:var(--ink-soft);transition:all .3s;flex-shrink:0;}
+.step-label{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);font-weight:300;white-space:nowrap;}
+.progress-step.active .step-circle{background:var(--ink);border-color:var(--ink);color:var(--cream);}
+.progress-step.active .step-label{color:var(--ink);}
+.progress-step.done .step-circle{background:var(--gold);border-color:var(--gold);color:var(--cream);}
+.progress-step.done .step-label{color:var(--gold);}
+.progress-line{width:3rem;height:1px;background:var(--line);margin:0 .5rem;flex-shrink:0;}
+.progress-line.done{background:var(--gold);}
+
+/* MAIN */
+.main{max-width:860px;margin:0 auto;padding:3rem 2rem 5rem;}
+
+/* STEP PANELS */
+.step-panel{display:none;}
+.step-panel.active{display:block;animation:fadeUp .4s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+.step-header{margin-bottom:2.5rem;}
+.step-eyebrow{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:300;display:block;margin-bottom:.6rem;}
+.step-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:300;line-height:1.15;}
+.step-title em{font-style:italic;color:var(--gold);}
+.step-sub{font-size:.82rem;font-weight:300;color:var(--ink-soft);line-height:1.8;margin-top:.6rem;}
+
+/* NAMES STEP */
+.names-display{background:var(--cream-dark);border:1px solid var(--line);padding:2.5rem;margin-bottom:2rem;}
+.names-row{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+.name-badge{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;font-style:italic;color:var(--ink);}
+.name-and{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:300;}
+.names-edit{margin-top:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-label{display:block;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:300;margin-bottom:.5rem;}
+.form-input{width:100%;background:var(--cream);border:1px solid var(--line);padding:.85rem 1rem;font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:300;color:var(--ink);outline:none;transition:border-color .3s;}
+.form-input:focus{border-color:var(--gold);}
+.form-input::placeholder{color:var(--ink-soft);opacity:.4;}
+
+/* SELECTION CARDS */
+.cards-grid{display:grid;gap:1rem;margin-bottom:2.5rem;}
+.cards-grid.cols-3{grid-template-columns:repeat(3,1fr);}
+.cards-grid.cols-2{grid-template-columns:repeat(2,1fr);}
+.select-card{border:1px solid var(--line);padding:1.75rem 1.5rem;cursor:pointer;transition:all .25s;background:var(--cream);position:relative;text-align:center;}
+.select-card:hover{border-color:var(--gold);transform:translateY(-2px);}
+.select-card.selected{border-color:var(--ink);background:var(--ink);}
+.select-card.selected .card-title{color:var(--cream);}
+.select-card.selected .card-sub{color:rgba(247,243,238,0.6);}
+.select-card.selected .card-price{color:var(--gold-light);}
+.select-card.selected::after{content:'✓';position:absolute;top:.75rem;right:.75rem;font-size:.65rem;color:var(--gold-light);}
+.card-icon{font-size:1.8rem;margin-bottom:.9rem;display:block;}
+.card-swatch{width:2.8rem;height:2.8rem;border-radius:50%;margin:0 auto 1rem;}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;margin-bottom:.25rem;transition:color .25s;}
+.card-sub{font-size:.72rem;font-weight:300;color:var(--ink-soft);line-height:1.6;transition:color .25s;}
+.card-price{font-size:.78rem;letter-spacing:.1em;color:var(--gold);font-weight:300;margin-top:.5rem;display:block;}
+
+/* ORDER SUMMARY */
+.summary-box{background:var(--cream-dark);border:1px solid var(--line);padding:2rem;margin-bottom:2rem;}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--line);}
+.summary-row:last-child{border-bottom:none;}
+.summary-label{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);font-weight:300;}
+.summary-value{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;}
+.summary-total{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0 0;margin-top:.5rem;}
+.summary-total .summary-label{font-size:.72rem;}
+.summary-total .summary-value{font-size:1.6rem;color:var(--gold);}
+
+.notice-box{background:var(--cream-mid);border:1px solid var(--line);border-left:3px solid var(--gold);padding:1.25rem 1.5rem;margin-bottom:2rem;}
+.notice-box p{font-size:.78rem;font-weight:300;color:var(--ink-soft);line-height:1.8;}
+.notice-box strong{font-weight:400;color:var(--ink);}
+
+/* EMAIL */
+.email-row{margin-bottom:1.5rem;}
+
+/* PAYPAL */
+#paypal-button-container{margin-top:1rem;}
+#paypal-button-container.hidden{display:none;}
+.paypal-note{font-size:.68rem;font-weight:300;color:var(--ink-soft);text-align:center;margin-top:.75rem;letter-spacing:.03em;}
+
+/* NAV BUTTONS */
+.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;gap:1rem;}
+.btn-primary{font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;font-weight:400;color:var(--cream);background:var(--ink);border:none;padding:1rem 2.5rem;cursor:pointer;transition:background .3s;flex-shrink:0;}
+.btn-primary:hover{background:var(--gold);}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;}
+.btn-secondary{font-family:'Jost',sans-serif;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;font-weight:300;color:var(--ink-soft);background:none;border:none;border-bottom:1px solid var(--line);padding-bottom:2px;cursor:pointer;transition:color .3s;}
+.btn-secondary:hover{color:var(--gold);}
+
+/* CONFIRMATION */
+.confirm-wrap{text-align:center;padding:3rem 2rem;}
+.confirm-icon{font-size:3rem;margin-bottom:1.5rem;display:block;}
+.confirm-wrap h2{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;margin-bottom:1rem;}
+.confirm-wrap h2 em{font-style:italic;color:var(--gold);}
+.confirm-wrap p{font-size:.85rem;font-weight:300;color:var(--ink-soft);line-height:1.9;max-width:32rem;margin:0 auto 1.5rem;}
+.confirm-timeline{background:var(--cream-dark);border:1px solid var(--line);padding:2rem;max-width:32rem;margin:2rem auto;text-align:left;}
+.timeline-item{display:flex;gap:1.25rem;padding:.75rem 0;border-bottom:1px solid var(--line);}
+.timeline-item:last-child{border-bottom:none;}
+.timeline-day{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);flex-shrink:0;width:4rem;}
+.timeline-text{font-size:.78rem;font-weight:300;color:var(--ink-soft);line-height:1.7;}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .main{padding:2rem 1.25rem 4rem;}
+  .cards-grid.cols-3{grid-template-columns:1fr;}
+  .cards-grid.cols-2{grid-template-columns:1fr;}
+  .names-edit{grid-template-columns:1fr;}
+  .btn-row{flex-direction:column-reverse;align-items:stretch;}
+  .btn-primary{text-align:center;}
+  .progress-bar{justify-content:flex-start;padding:1.25rem 1.5rem;}
+  .step-label{display:none;}
+  .progress-line{width:1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Shape of Your Love</a>
+  <a class="nav-back" href="index.html">Back to home</a>
+</nav>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-bar">
+    <div class="progress-step active" id="prog-1">
+      <div class="step-circle">1</div>
+      <div class="step-label">Your names</div>
+    </div>
+    <div class="progress-line" id="line-1"></div>
+    <div class="progress-step" id="prog-2">
+      <div class="step-circle">2</div>
+      <div class="step-label">Jewelry type</div>
+    </div>
+    <div class="progress-line" id="line-2"></div>
+    <div class="progress-step" id="prog-3">
+      <div class="step-circle">3</div>
+      <div class="step-label">Material</div>
+    </div>
+    <div class="progress-line" id="line-3"></div>
+    <div class="progress-step" id="prog-4">
+      <div class="step-circle">4</div>
+      <div class="step-label">Review &amp; pay</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- STEP 1: NAMES -->
+  <div class="step-panel active" id="step-1">
+    <div class="step-header">
+      <span class="step-eyebrow">Step 1 of 4</span>
+      <h2 class="step-title">Whose <em>names</em><br>shall we weave?</h2>
+      <p class="step-sub">These two names will be drawn by hand and dissolved into a single, continuous shape — unique to you. Check they're correct before continuing.</p>
+    </div>
+
+    <div class="names-display">
+      <div class="names-row">
+        <span class="name-badge" id="name1-display">Your name</span>
+        <span class="name-and">&amp;</span>
+        <span class="name-badge" id="name2-display">Their name</span>
+      </div>
+      <div class="names-edit">
+        <div>
+          <label class="form-label">Your name</label>
+          <input class="form-input" type="text" id="input-name1" placeholder="e.g. Jonathan" oninput="updateNames()"/>
+        </div>
+        <div>
+          <label class="form-label">Their name</label>
+          <input class="form-input" type="text" id="input-name2" placeholder="e.g. Joanna" oninput="updateNames()"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice-box" style="margin-top:1.5rem;">
+      <p><strong>Please double-check the spelling.</strong> The artist will draw exactly what you enter here — names cannot be changed after the order is placed.</p>
+    </div>
+
+    <div class="btn-row">
+      <a href="index.html" class="btn-secondary">← Back to home</a>
+      <button class="btn-primary" onclick="goTo(2)" id="btn-step1">Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: JEWELRY TYPE -->
+  <div class="step-panel" id="step-2">
+    <div class="step-header">
+      <span class="step-eyebrow">Step 2 of 4</span>
+      <h2 class="step-title">What would you<br>like it to <em>become?</em></h2>
+      <p class="step-sub">Choose the form your shape will take.</p>
+    </div>
+    <div class="cards-grid cols-3">
+      <div class="select-card" onclick="selectType('Necklace', this)">
+        <span class="card-icon">✦</span>
+        <div class="card-title">Necklace</div>
+        <div class="card-sub">Worn close to the heart. Comes on a delicate 45cm chain.</div>
+      </div>
+      <div class="select-card" onclick="selectType('Earrings', this)">
+        <span class="card-icon">◇</span>
+        <div class="card-title">Earrings</div>
+        <div class="card-sub">A matching pair. Each ear carries half the story.</div>
+      </div>
+      <div class="select-card" onclick="selectType('Bracelet', this)">
+        <span class="card-icon">○</span>
+        <div class="card-title">Bracelet</div>
+        <div class="card-sub">A continuous loop. Your shape wrapped around the wrist.</div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(1)">← Back</button>
+      <button class="btn-primary" onclick="goTo(3)" id="btn-step2" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: MATERIAL -->
+  <div class="step-panel" id="step-3">
+    <div class="step-header">
+      <span class="step-eyebrow">Step 3 of 4</span>
+      <h2 class="step-title">Choose your <em>metal</em></h2>
+      <p class="step-sub">Each material is cast using the lost-wax method, preserving every curve of the original hand-drawn line.</p>
+    </div>
+    <div class="cards-grid cols-2">
+      <div class="select-card" onclick="selectMaterial('Sterling Silver', 150, this)">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#C8CDD5,#8A8E96);"></div>
+        <div class="card-title">Sterling Silver</div>
+        <div class="card-sub">Classic, timeless, and hypoallergenic. Polished to a bright finish.</div>
+        <span class="card-price">$150</span>
+      </div>
+      <div class="select-card" onclick="selectMaterial('Gold Plated', 250, this)">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#C9A96E,#A8895A);"></div>
+        <div class="card-title">Gold Plated</div>
+        <div class="card-sub">Sterling silver with a warm 18k gold layer. Rich and luminous.</div>
+        <span class="card-price">$250</span>
+      </div>
+      <div class="select-card" onclick="selectMaterial('Rose Gold Plated', 250, this)">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#D4A5A0,#B07870);"></div>
+        <div class="card-title">Rose Gold Plated</div>
+        <div class="card-sub">A warm, romantic blush tone. Soft and modern.</div>
+        <span class="card-price">$250</span>
+      </div>
+      <div class="select-card" onclick="selectMaterial('White Gold Plated', 320, this)">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#E8E8E8,#C0C0C0);border:1px solid rgba(0,0,0,0.1);"></div>
+        <div class="card-title">White Gold Plated</div>
+        <div class="card-sub">Cool, bright, and contemporary. A modern take on classic gold.</div>
+        <span class="card-price">$320</span>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="goTo(2)">← Back</button>
+      <button class="btn-primary" onclick="goTo(4)" id="btn-step3" disabled>Review Order →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: REVIEW & PAY -->
+  <div class="step-panel" id="step-4">
+    <div class="step-header">
+      <span class="step-eyebrow">Step 4 of 4</span>
+      <h2 class="step-title">Your order,<br><em>reviewed</em></h2>
+      <p class="step-sub">Everything looks right? Complete your order below.</p>
+    </div>
+
+    <div class="summary-box">
+      <div class="summary-row">
+        <span class="summary-label">Names</span>
+        <span class="summary-value" id="sum-names">—</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Jewelry type</span>
+        <span class="summary-value" id="sum-type">—</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Material</span>
+        <span class="summary-value" id="sum-material">—</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Shipping</span>
+        <span class="summary-value">Free worldwide</span>
+      </div>
+      <div class="summary-total">
+        <span class="summary-label">Total</span>
+        <span class="summary-value" id="sum-total">—</span>
+      </div>
+    </div>
+
+    <div class="notice-box">
+      <p><strong>What happens next:</strong> Within 3–5 days of your order, we'll email you three hand-drawn shape variations. You choose your favourite, we cast it, and ship it directly to you within 7 days.</p>
+    </div>
+
+    <div class="email-row">
+      <label class="form-label">Your email — we'll send your shape variations here</label>
+      <input class="form-input" type="email" id="input-email" placeholder="your@email.com"/>
+    </div>
+
+    <div id="paypal-button-container"></div>
+    <p class="paypal-note">Secure payment via PayPal · Your card details are never stored</p>
+
+    <div class="btn-row" style="margin-top:1rem;">
+      <button class="btn-secondary" onclick="goTo(3)">← Back</button>
+      <span></span>
+    </div>
+  </div>
+
+  <!-- STEP 5: CONFIRMATION -->
+  <div class="step-panel" id="step-5">
+    <div class="confirm-wrap">
+      <span class="confirm-icon">✦</span>
+      <h2>Your order<br>is <em>placed</em></h2>
+      <p>Thank you. We've received your order and we're already thinking about <span id="conf-names">your names</span>. Within 3–5 days you'll receive three hand-drawn shape variations by email — yours to choose from.</p>
+      <div class="confirm-timeline">
+        <div class="timeline-item">
+          <span class="timeline-day">Now</span>
+          <span class="timeline-text">Order confirmed. Your names are with our artist.</span>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-day">Day 3–5</span>
+          <span class="timeline-text">You receive three unique hand-drawn shape variations by email. Choose your favourite.</span>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-day">Day 5–7</span>
+          <span class="timeline-text">Your chosen shape is cast in <span id="conf-material">silver</span> using the lost-wax method and polished by hand.</span>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-day">Day 7</span>
+          <span class="timeline-text">Your piece ships. Tracking details sent to your email.</span>
+        </div>
+      </div>
+      <a href="index.html" class="btn-primary" style="display:inline-block;margin-top:1rem;text-decoration:none;">Back to home</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// State
+const order = {
+  name1: '', name2: '', type: '', material: '', price: 0, email: ''
+};
+
+// Read URL params from landing page
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const n1 = params.get('name1') || '';
+  const n2 = params.get('name2') || '';
+  const t  = params.get('type')  || '';
+  if(n1) { document.getElementById('input-name1').value = n1; order.name1 = n1; }
+  if(n2) { document.getElementById('input-name2').value = n2; order.name2 = n2; }
+  updateNames();
+  if(t) {
+    // pre-select type card
+    document.querySelectorAll('#step-2 .select-card').forEach(card => {
+      if(card.querySelector('.card-title').textContent === t) {
+        selectType(t, card);
+      }
+    });
+  }
+  renderPayPal();
+});
+
+function updateNames() {
+  const n1 = document.getElementById('input-name1').value.trim();
+  const n2 = document.getElementById('input-name2').value.trim();
+  order.name1 = n1;
+  order.name2 = n2;
+  document.getElementById('name1-display').textContent = n1 || 'Your name';
+  document.getElementById('name2-display').textContent = n2 || 'Their name';
+  document.getElementById('btn-step1').disabled = !(n1 && n2);
+}
+
+function selectType(type, el) {
+  document.querySelectorAll('#step-2 .select-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  order.type = type;
+  document.getElementById('btn-step2').disabled = false;
+}
+
+function selectMaterial(material, price, el) {
+  document.querySelectorAll('#step-3 .select-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  order.material = material;
+  order.price = price;
+  document.getElementById('btn-step3').disabled = false;
+}
+
+function goTo(step) {
+  // Validate step 1
+  if(step > 1 && (!order.name1 || !order.name2)) {
+    document.getElementById('input-name1').focus();
+    return;
+  }
+  // Populate summary on step 4
+  if(step === 4) {
+    document.getElementById('sum-names').textContent = order.name1 + ' & ' + order.name2;
+    document.getElementById('sum-type').textContent = order.type;
+    document.getElementById('sum-material').textContent = order.material;
+    document.getElementById('sum-total').textContent = '$' + order.price;
+  }
+  // Hide all panels
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+  // Update progress
+  for(let i = 1; i <= 4; i++) {
+    const prog = document.getElementById('prog-' + i);
+    const line = document.getElementById('line-' + i);
+    prog.classList.remove('active','done');
+    if(line) line.classList.remove('done');
+    if(i < step) { prog.classList.add('done'); if(line) line.classList.add('done'); }
+    if(i === step) prog.classList.add('active');
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderPayPal() {
+  if(typeof paypal === 'undefined') return;
+  paypal.Buttons({
+    style: {
+      layout: 'vertical',
+      color:  'black',
+      shape:  'rect',
+      label:  'pay',
+      height: 45
+    },
+    createOrder: function(data, actions) {
+      const email = document.getElementById('input-email').value.trim();
+      if(!email || !email.includes('@')) {
+        alert('Please enter a valid email address so we can send your shape variations.');
+        return;
+      }
+      order.email = email;
+      return actions.order.create({
+        purchase_units: [{
+          description: 'Shape of Your Love — ' + order.name1 + ' & ' + order.name2 + ' — ' + order.type + ' — ' + order.material,
+          amount: {
+            value: String(order.price),
+            currency_code: 'USD'
+          }
+        }],
+        application_context: {
+          shipping_preference: 'NO_SHIPPING'
+        }
+      });
+    },
+    onApprove: function(data, actions) {
+      return actions.order.capture().then(function(details) {
+        // Show confirmation
+        document.getElementById('conf-names').textContent = order.name1 + ' & ' + order.name2;
+        document.getElementById('conf-material').textContent = order.material.toLowerCase();
+        document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('step-5').classList.add('active');
+        // Hide progress bar on confirmation
+        document.querySelector('.progress-wrap').style.display = 'none';
+        window.scrollTo({top:0,behavior:'smooth'});
+      });
+    },
+    onError: function(err) {
+      alert('Something went wrong with the payment. Please try again.');
+      console.error(err);
+    }
+  }).render('#paypal-button-container');
+}
+</script>
+</body>
+</html>

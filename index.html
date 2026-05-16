@@ -392,8 +392,17 @@ function handleSubmit(){
   const n1=document.getElementById('name1').value.trim();
   const n2=document.getElementById('name2').value.trim();
   const type=document.querySelector('.type-btn.active')?.textContent||'Necklace';
-  if(!n1||!n2){alert('Please enter both names to continue.');return;}
-  alert('Order started for '+n1+' & '+n2+' — '+type+'. Next: choose your material and complete checkout.');
+  if(!n1||!n2){
+    document.getElementById('name1').style.borderColor='#A8895A';
+    document.getElementById('name2').style.borderColor='#A8895A';
+    setTimeout(()=>{
+      document.getElementById('name1').style.borderColor='';
+      document.getElementById('name2').style.borderColor='';
+    },2000);
+    return;
+  }
+  const params=new URLSearchParams({name1:n1,name2:n2,type:type});
+  window.location.href='order.html?'+params.toString();
 }
 </script>
 </body>
