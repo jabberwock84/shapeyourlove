@@ -6,6 +6,7 @@
 <title>Create Your Piece — Shape of Your Love</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
 <script src="https://www.paypal.com/sdk/js?client-id=AaXeVD6pcsQHk7-Kriadn7wv0UNlFZ4a80e6FVeBuc4SO6c_cfKXGr_rRUhRKgPxJEd0JSfUatnMVnsO&currency=USD"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -465,13 +466,30 @@ function renderPayPal() {
       });
     },
     onApprove: function(data, actions) {
-      return actions.order.capture().then(function(details) {
+      return actions.order.capture().then(async function(details) {
+        // Save order to Supabase
+        try {
+          const { createClient } = supabase;
+          const db = createClient(
+            'https://dyskzfwoybldgkpdlcdo.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5c2t6ZndveWJsZGdrcGRsY2RvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NDM2NjQsImV4cCI6MjA5NDUxOTY2NH0.-Q45yFi5Mw4gtPu7onwUrlHL4kAcps5DhQDQARJaO9E'
+          );
+          await db.from('orders').insert({
+            name1: order.name1,
+            name2: order.name2,
+            jewelry_type: order.type,
+            material: order.material,
+            price: order.price,
+            email: order.email,
+            paypal_order_id: details.id,
+            status: 'new'
+          });
+        } catch(e) { console.error('Supabase save error:', e); }
         // Show confirmation
         document.getElementById('conf-names').textContent = order.name1 + ' & ' + order.name2;
         document.getElementById('conf-material').textContent = order.material.toLowerCase();
         document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
         document.getElementById('step-5').classList.add('active');
-        // Hide progress bar on confirmation
         document.querySelector('.progress-wrap').style.display = 'none';
         window.scrollTo({top:0,behavior:'smooth'});
       });
