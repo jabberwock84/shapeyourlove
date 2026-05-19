@@ -467,6 +467,22 @@ function renderPayPal() {
     },
     onApprove: function(data, actions) {
       return actions.order.capture().then(async function(details) {
+        // Send email notifications
+        try {
+          await fetch('/api/send-notification', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name1: order.name1,
+              name2: order.name2,
+              jewelry_type: order.type,
+              material: order.material,
+              price: order.price,
+              email: order.email,
+              paypal_order_id: details.id
+            })
+          });
+        } catch(e) { console.error('Email error:', e); }
         // Save order to Supabase
         try {
           const { createClient } = supabase;
