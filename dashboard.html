@@ -299,7 +299,7 @@ function orderCard(o) {
         <textarea class="notes-input" id="notes-${o.id}" placeholder="Notes, tracking number, etc.">${o.notes||''}</textarea>
         <div class="action-btns">
           <button class="btn-save" onclick="saveOrder('${o.id}')">Save</button>
-          <a class="btn-email" href="mailto:${o.email}?subject=Your Shape of Your Love variations — ${o.name1} %26 ${o.name2}&body=Hi,%0A%0AYour hand-drawn shape variations for ${o.name1} %26 ${o.name2} are ready — please choose your favourite:%0A%0Ahttps://shapeofyourlove.com/choose.html?order=${o.id}%0A%0AWarm regards,%0AShape of Your Love">✉ Email customer</a>
+          <button class="btn-email" onclick="openGmail('${o.email}', '${o.name1}', '${o.name2}', '${o.id}')">✉ Email customer</button>
           <span class="save-confirm" id="conf-${o.id}">✓ Saved</span>
         </div>
       </div>
@@ -386,6 +386,14 @@ async function saveOrder(id) {
     const badge = document.querySelector(`#card-${id} .status-badge`);
     if (badge) { badge.className = 'status-badge status-'+status; badge.textContent = statusLabels[status]||status; }
   }
+}
+
+function openGmail(email, name1, name2, orderId) {
+  const subject = encodeURIComponent(`Your Shape of Your Love variations — ${name1} & ${name2}`);
+  const body = encodeURIComponent(
+    `Hi,\n\nYour hand-drawn shape variations for ${name1} & ${name2} are ready — please choose your favourite:\n\nhttps://shapeofyourlove.com/choose.html?order=${orderId}\n\nWarm regards,\nShape of Your Love`
+  );
+  window.open(`https://mail.google.com/mail/u/0/?view=cm&to=${encodeURIComponent(email)}&su=${subject}&body=${body}`, '_blank');
 }
 </script>
 </body>
