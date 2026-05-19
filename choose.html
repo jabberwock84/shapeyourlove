@@ -236,6 +236,23 @@ async function confirmChoice() {
     return;
   }
 
+  // Notify artist
+  try {
+    await fetch('/api/shape-chosen', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name1: order.name1,
+        name2: order.name2,
+        jewelry_type: order.jewelry_type,
+        material: order.material,
+        email: order.email,
+        variation: selectedShape + 1,
+        shape_url: order.shape_urls[selectedShape]
+      })
+    });
+  } catch(e) { console.error('Notify error:', e); }
+
   showState('confirmed');
 }
 </script>
