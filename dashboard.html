@@ -15,7 +15,6 @@
   --line:rgba(28,26,23,0.12);
   --green:#4A7C59;--red:#8B3A3A;--blue:#3A5A8B;
 }
-html{scroll-behavior:smooth;}
 body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;}
 
 /* LOGIN */
@@ -39,7 +38,7 @@ nav{background:var(--ink);padding:1rem 2rem;display:flex;justify-content:space-b
 .logout-btn:hover{color:var(--cream);}
 
 /* STATS */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:1px solid var(--line);}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line);}
 .stat{padding:1.5rem 2rem;border-right:1px solid var(--line);text-align:center;}
 .stat:last-child{border-right:none;}
 .stat-num{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--gold);display:block;}
@@ -58,53 +57,78 @@ nav{background:var(--ink);padding:1rem 2rem;display:flex;justify-content:space-b
 .loading{text-align:center;padding:4rem;font-size:.8rem;color:var(--ink-soft);letter-spacing:.1em;}
 .empty{text-align:center;padding:4rem;}
 .empty p{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--ink-soft);}
-.empty span{font-size:.75rem;color:var(--ink-soft);opacity:.6;display:block;margin-top:.5rem;}
 
-.order-card{background:white;border:1px solid var(--line);margin-bottom:1rem;overflow:hidden;transition:border-color .3s;}
-.order-card:hover{border-color:var(--gold);}
-.order-header{padding:1.25rem 1.5rem;display:grid;grid-template-columns:auto 1fr auto auto auto;gap:1.5rem;align-items:center;cursor:pointer;}
+.order-card{background:white;border:1px solid var(--line);margin-bottom:1rem;overflow:hidden;}
+.order-header{padding:1.25rem 1.5rem;display:grid;grid-template-columns:auto 1fr auto auto auto auto;gap:1.25rem;align-items:center;cursor:pointer;}
 .order-names{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;}
-.order-meta{display:flex;gap:1rem;flex-wrap:wrap;}
-.meta-tag{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:300;background:var(--cream);padding:.3rem .6rem;border:1px solid var(--line);}
-.order-price{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gold);}
-.order-date{font-size:.65rem;color:var(--ink-soft);font-weight:300;white-space:nowrap;}
-.status-badge{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.35rem .75rem;font-weight:400;border-radius:0;white-space:nowrap;}
+.order-meta{display:flex;gap:.75rem;flex-wrap:wrap;}
+.meta-tag{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:300;background:var(--cream);padding:.25rem .5rem;border:1px solid var(--line);}
+.order-price{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);}
+.order-date{font-size:.62rem;color:var(--ink-soft);font-weight:300;white-space:nowrap;}
+.status-badge{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .65rem;white-space:nowrap;}
 .status-new{background:#FFF3CD;color:#856404;border:1px solid #FFECB5;}
 .status-shapes_sent{background:#CCE5FF;color:#004085;border:1px solid #B8DAFF;}
 .status-shape_chosen{background:#D4EDDA;color:#155724;border:1px solid #C3E6CB;}
 .status-shipped{background:#D1ECF1;color:#0C5460;border:1px solid #BEE5EB;}
 .status-complete{background:#E2E3E5;color:#383D41;border:1px solid #D6D8DB;}
-
-.order-body{display:none;padding:1.5rem;border-top:1px solid var(--line);background:var(--cream);}
-.order-body.open{display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
-
-.detail-section h4{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:1rem;}
-.detail-row{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--line);font-size:.8rem;}
-.detail-row:last-child{border-bottom:none;}
-.detail-label{color:var(--ink-soft);font-weight:300;}
-.detail-value{font-weight:400;}
-.detail-email{font-family:monospace;font-size:.75rem;color:var(--blue);word-break:break-all;}
-
-.actions-section h4{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:1rem;}
-.status-select{width:100%;background:var(--cream-dark);border:1px solid var(--line);padding:.75rem 1rem;font-family:'Jost',sans-serif;font-size:.78rem;color:var(--ink);outline:none;margin-bottom:1rem;cursor:pointer;}
-.notes-input{width:100%;background:var(--cream-dark);border:1px solid var(--line);padding:.75rem 1rem;font-family:'Jost',sans-serif;font-size:.78rem;color:var(--ink);outline:none;margin-bottom:1rem;resize:vertical;min-height:80px;}
-.action-btns{display:flex;gap:.75rem;flex-wrap:wrap;}
-.btn-save{font-family:'Jost',sans-serif;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;padding:.7rem 1.5rem;background:var(--ink);color:var(--cream);border:none;cursor:pointer;transition:background .3s;}
-.btn-save:hover{background:var(--gold);}
-.btn-email{font-family:'Jost',sans-serif;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;padding:.7rem 1.5rem;background:transparent;color:var(--ink);border:1px solid var(--line);cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
-.btn-email:hover{border-color:var(--gold);color:var(--gold);}
-.save-confirm{font-size:.7rem;color:var(--green);margin-left:.5rem;display:none;}
-
 .chevron{transition:transform .3s;font-size:.7rem;color:var(--ink-soft);}
 .chevron.open{transform:rotate(180deg);}
 
-@media(max-width:768px){
+.order-body{display:none;border-top:1px solid var(--line);background:var(--cream);}
+.order-body.open{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;}
+
+.body-section{padding:1.5rem;border-right:1px solid var(--line);}
+.body-section:last-child{border-right:none;}
+.body-section h4{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:1rem;}
+
+.detail-row{display:flex;justify-content:space-between;padding:.45rem 0;border-bottom:1px solid var(--line);font-size:.78rem;}
+.detail-row:last-child{border-bottom:none;}
+.detail-label{color:var(--ink-soft);font-weight:300;}
+.detail-email{font-size:.72rem;color:var(--blue);word-break:break-all;}
+
+/* UPLOAD AREA */
+.upload-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1rem;}
+.upload-slot{border:1px dashed var(--line);aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:border-color .3s;position:relative;overflow:hidden;background:white;}
+.upload-slot:hover{border-color:var(--gold);}
+.upload-slot.has-image{border-style:solid;border-color:var(--ink);}
+.upload-slot img{width:100%;height:100%;object-fit:contain;padding:.5rem;}
+.upload-slot .slot-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:300;margin-top:.35rem;}
+.upload-slot .slot-icon{font-size:1.2rem;color:var(--ink-soft);opacity:.4;}
+.upload-slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.upload-slot .remove-btn{position:absolute;top:.3rem;right:.3rem;background:var(--ink);color:var(--cream);border:none;width:1.2rem;height:1.2rem;font-size:.6rem;cursor:pointer;display:none;align-items:center;justify-content:center;}
+.upload-slot.has-image .remove-btn{display:flex;}
+
+.btn-upload-shapes{width:100%;padding:.85rem;background:var(--gold);color:var(--cream);border:none;font-family:'Jost',sans-serif;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .3s;margin-bottom:.75rem;}
+.btn-upload-shapes:hover{background:var(--ink);}
+.btn-upload-shapes:disabled{opacity:.4;cursor:not-allowed;}
+
+/* ACTIONS */
+.status-select{width:100%;background:white;border:1px solid var(--line);padding:.7rem .9rem;font-family:'Jost',sans-serif;font-size:.78rem;color:var(--ink);outline:none;margin-bottom:.75rem;cursor:pointer;}
+.notes-input{width:100%;background:white;border:1px solid var(--line);padding:.7rem .9rem;font-family:'Jost',sans-serif;font-size:.78rem;color:var(--ink);outline:none;margin-bottom:.75rem;resize:vertical;min-height:70px;}
+.action-btns{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;}
+.btn-save{font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;padding:.65rem 1.25rem;background:var(--ink);color:var(--cream);border:none;cursor:pointer;transition:background .3s;}
+.btn-save:hover{background:var(--gold);}
+.btn-email{font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;padding:.65rem 1.25rem;background:transparent;color:var(--ink);border:1px solid var(--line);cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-email:hover{border-color:var(--gold);color:var(--gold);}
+.btn-copy-link{font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;padding:.65rem 1.25rem;background:transparent;color:var(--blue);border:1px solid rgba(58,90,139,0.3);cursor:pointer;transition:all .3s;}
+.btn-copy-link:hover{background:rgba(58,90,139,0.08);}
+.save-confirm{font-size:.7rem;color:var(--green);display:none;}
+
+/* SHAPE CHOICE INDICATOR */
+.choice-indicator{background:#D4EDDA;border:1px solid #C3E6CB;padding:.6rem 1rem;font-size:.75rem;color:#155724;margin-bottom:.75rem;display:none;}
+.choice-indicator.visible{display:block;}
+
+@media(max-width:900px){
+  .order-body.open{grid-template-columns:1fr;}
+  .body-section{border-right:none;border-bottom:1px solid var(--line);}
+  .body-section:last-child{border-bottom:none;}
   .stats{grid-template-columns:1fr 1fr;}
   .stat:nth-child(2){border-right:none;}
   .stat:nth-child(3){border-top:1px solid var(--line);}
-  .order-header{grid-template-columns:1fr auto;gap:.75rem;}
-  .order-meta{display:none;}
-  .order-body.open{grid-template-columns:1fr;}
+}
+@media(max-width:640px){
+  .order-header{grid-template-columns:1fr auto;}
+  .order-meta,.order-price,.order-date{display:none;}
   .orders-wrap{padding:1rem;}
 }
 </style>
@@ -118,7 +142,7 @@ nav{background:var(--ink);padding:1rem 2rem;display:flex;justify-content:space-b
     <div class="login-sub">Artist Dashboard</div>
     <input class="login-input" type="password" id="pwInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"/>
     <button class="login-btn" onclick="doLogin()">Enter Dashboard</button>
-    <div class="login-error" id="loginError">Incorrect password. Try again.</div>
+    <div class="login-error" id="loginError">Incorrect password.</div>
   </div>
 </div>
 
@@ -158,17 +182,15 @@ nav{background:var(--ink);padding:1rem 2rem;display:flex;justify-content:space-b
 const SUPABASE_URL = 'https://dyskzfwoybldgkpdlcdo.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5c2t6ZndveWJsZGdrcGRsY2RvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NDM2NjQsImV4cCI6MjA5NDUxOTY2NH0.-Q45yFi5Mw4gtPu7onwUrlHL4kAcps5DhQDQARJaO9E';
 const DASHBOARD_PASSWORD = 'soyl2026';
-
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let allOrders = [];
 let currentFilter = 'all';
+const pendingUploads = {}; // orderId -> [file, file, file]
 
-// LOGIN
 function doLogin() {
-  const pw = document.getElementById('pwInput').value;
-  if (pw === DASHBOARD_PASSWORD) {
+  if (document.getElementById('pwInput').value === DASHBOARD_PASSWORD) {
     sessionStorage.setItem('soyl_auth', '1');
     document.getElementById('loginWrap').style.display = 'none';
     document.getElementById('dashWrap').style.display = 'block';
@@ -177,13 +199,8 @@ function doLogin() {
     document.getElementById('loginError').style.display = 'block';
   }
 }
+function doLogout() { sessionStorage.removeItem('soyl_auth'); location.reload(); }
 
-function doLogout() {
-  sessionStorage.removeItem('soyl_auth');
-  location.reload();
-}
-
-// Check session
 window.addEventListener('DOMContentLoaded', () => {
   if (sessionStorage.getItem('soyl_auth') === '1') {
     document.getElementById('loginWrap').style.display = 'none';
@@ -192,33 +209,24 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// LOAD ORDERS
 async function loadOrders() {
   document.getElementById('ordersWrap').innerHTML = '<div class="loading">Loading orders...</div>';
   const { data, error } = await db.from('orders').select('*').order('created_at', { ascending: false });
-  if (error) {
-    document.getElementById('ordersWrap').innerHTML = '<div class="loading">Error loading orders. Check console.</div>';
-    console.error(error);
-    return;
-  }
+  if (error) { document.getElementById('ordersWrap').innerHTML = '<div class="loading">Error loading.</div>'; return; }
   allOrders = data || [];
   updateStats();
   renderOrders();
 }
 
 function updateStats() {
-  const total = allOrders.length;
-  const newOrders = allOrders.filter(o => o.status === 'new').length;
-  const inProgress = allOrders.filter(o => ['shapes_sent','shape_chosen'].includes(o.status)).length;
-  const revenue = allOrders.reduce((sum, o) => sum + Number(o.price || 0), 0);
-  document.getElementById('st-total').textContent = total;
-  document.getElementById('st-new').textContent = newOrders;
-  document.getElementById('st-progress').textContent = inProgress;
-  document.getElementById('st-revenue').textContent = '$' + revenue.toLocaleString();
+  document.getElementById('st-total').textContent = allOrders.length;
+  document.getElementById('st-new').textContent = allOrders.filter(o => o.status === 'new').length;
+  document.getElementById('st-progress').textContent = allOrders.filter(o => ['shapes_sent','shape_chosen'].includes(o.status)).length;
+  document.getElementById('st-revenue').textContent = '$' + allOrders.reduce((s,o) => s + Number(o.price||0), 0).toLocaleString();
 }
 
-function setFilter(filter, btn) {
-  currentFilter = filter;
+function setFilter(f, btn) {
+  currentFilter = f;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderOrders();
@@ -227,25 +235,28 @@ function setFilter(filter, btn) {
 function renderOrders() {
   const filtered = currentFilter === 'all' ? allOrders : allOrders.filter(o => o.status === currentFilter);
   const wrap = document.getElementById('ordersWrap');
-  if (filtered.length === 0) {
-    wrap.innerHTML = '<div class="empty"><p>No orders here yet.</p><span>They\'ll appear as customers complete checkout.</span></div>';
-    return;
-  }
-  wrap.innerHTML = filtered.map(order => orderCard(order)).join('');
+  if (!filtered.length) { wrap.innerHTML = '<div class="empty"><p>No orders here yet.</p></div>'; return; }
+  wrap.innerHTML = filtered.map(o => orderCard(o)).join('');
 }
 
-function statusLabel(s) {
-  const map = { new:'New', shapes_sent:'Shapes sent', shape_chosen:'Shape chosen', shipped:'Shipped', complete:'Complete' };
-  return map[s] || s;
-}
-
-function formatDate(d) {
-  return new Date(d).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
-}
+const statusLabels = { new:'New', shapes_sent:'Shapes sent', shape_chosen:'Shape chosen', shipped:'Shipped', complete:'Complete' };
+function fmtDate(d) { return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
 
 function orderCard(o) {
-  return `
-  <div class="order-card" id="card-${o.id}">
+  const choiceIndicator = o.shape_choice !== null && o.shape_choice !== undefined
+    ? `<div class="choice-indicator visible">✓ Customer chose Variation ${o.shape_choice + 1}</div>` : '';
+  const uploadedPreviews = o.shape_urls && o.shape_urls.length
+    ? o.shape_urls.map((url,i) => `<div class="upload-slot has-image" id="slot-${o.id}-${i}">
+        <img src="${url}" alt="Shape ${i+1}"/>
+        <div class="slot-label">Variation ${i+1}</div>
+      </div>`).join('')
+    : [0,1,2].map(i => `<div class="upload-slot" id="slot-${o.id}-${i}">
+        <span class="slot-icon">+</span>
+        <div class="slot-label">Variation ${i+1}</div>
+        <input type="file" accept="image/*" onchange="handleFileSelect('${o.id}',${i},this)"/>
+      </div>`).join('');
+
+  return `<div class="order-card" id="card-${o.id}">
     <div class="order-header" onclick="toggleCard('${o.id}')">
       <div class="order-names">${o.name1} &amp; ${o.name2}</div>
       <div class="order-meta">
@@ -254,22 +265,29 @@ function orderCard(o) {
         <span class="meta-tag">${o.email}</span>
       </div>
       <div class="order-price">$${o.price}</div>
-      <div class="order-date">${formatDate(o.created_at)}</div>
-      <span class="status-badge status-${o.status}">${statusLabel(o.status)}</span>
+      <div class="order-date">${fmtDate(o.created_at)}</div>
+      <span class="status-badge status-${o.status}">${statusLabels[o.status]||o.status}</span>
       <span class="chevron" id="chev-${o.id}">▾</span>
     </div>
     <div class="order-body" id="body-${o.id}">
-      <div class="detail-section">
+      <div class="body-section">
         <h4>Order details</h4>
-        <div class="detail-row"><span class="detail-label">Names</span><span class="detail-value">${o.name1} &amp; ${o.name2}</span></div>
-        <div class="detail-row"><span class="detail-label">Jewelry type</span><span class="detail-value">${o.jewelry_type}</span></div>
-        <div class="detail-row"><span class="detail-label">Material</span><span class="detail-value">${o.material}</span></div>
-        <div class="detail-row"><span class="detail-label">Price paid</span><span class="detail-value">$${o.price}</span></div>
-        <div class="detail-row"><span class="detail-label">Order date</span><span class="detail-value">${formatDate(o.created_at)}</span></div>
-        <div class="detail-row"><span class="detail-label">PayPal ID</span><span class="detail-value" style="font-size:.72rem;opacity:.6">${o.paypal_order_id || '—'}</span></div>
-        <div class="detail-row"><span class="detail-label">Customer email</span><span class="detail-value detail-email">${o.email}</span></div>
+        <div class="detail-row"><span class="detail-label">Names</span><span>${o.name1} &amp; ${o.name2}</span></div>
+        <div class="detail-row"><span class="detail-label">Type</span><span>${o.jewelry_type}</span></div>
+        <div class="detail-row"><span class="detail-label">Material</span><span>${o.material}</span></div>
+        <div class="detail-row"><span class="detail-label">Paid</span><span style="color:var(--gold)">$${o.price}</span></div>
+        <div class="detail-row"><span class="detail-label">Date</span><span>${fmtDate(o.created_at)}</span></div>
+        <div class="detail-row"><span class="detail-label">Email</span><span class="detail-email">${o.email}</span></div>
+        <div class="detail-row"><span class="detail-label">PayPal</span><span style="font-size:.68rem;opacity:.5">${o.paypal_order_id||'—'}</span></div>
       </div>
-      <div class="actions-section">
+      <div class="body-section">
+        <h4>Shape variations</h4>
+        ${choiceIndicator}
+        <div class="upload-grid" id="upload-grid-${o.id}">${uploadedPreviews}</div>
+        ${!o.shape_urls || !o.shape_urls.length ? `<button class="btn-upload-shapes" id="btn-upload-${o.id}" onclick="uploadShapes('${o.id}')" disabled>Upload & send to customer</button>` : `<button class="btn-copy-link" onclick="copyChooseLink('${o.id}')">⧉ Copy customer link</button>`}
+        <div class="save-confirm" id="upload-conf-${o.id}">✓ Shapes uploaded & link ready</div>
+      </div>
+      <div class="body-section">
         <h4>Update order</h4>
         <select class="status-select" id="status-${o.id}">
           <option value="new" ${o.status==='new'?'selected':''}>New — awaiting shapes</option>
@@ -278,12 +296,10 @@ function orderCard(o) {
           <option value="shipped" ${o.status==='shipped'?'selected':''}>Shipped</option>
           <option value="complete" ${o.status==='complete'?'selected':''}>Complete</option>
         </select>
-        <textarea class="notes-input" id="notes-${o.id}" placeholder="Add notes (tracking number, shape choice, etc)">${o.notes || ''}</textarea>
+        <textarea class="notes-input" id="notes-${o.id}" placeholder="Notes, tracking number, etc.">${o.notes||''}</textarea>
         <div class="action-btns">
-          <button class="btn-save" onclick="saveOrder('${o.id}')">Save changes</button>
-          <a class="btn-email" href="mailto:${o.email}?subject=Your Shape of Your Love design variations — ${o.name1} %26 ${o.name2}&body=Hi there,%0A%0AThank you for your order! Your hand-drawn shape variations for ${o.name1} %26 ${o.name2} are ready.%0A%0APlease reply to this email with your chosen variation and we'll begin casting your ${o.material} ${o.jewelry_type}.%0A%0AWarm regards,%0AShape of Your Love">
-            ✉ Email customer
-          </a>
+          <button class="btn-save" onclick="saveOrder('${o.id}')">Save</button>
+          <a class="btn-email" href="mailto:${o.email}?subject=Your Shape of Your Love variations — ${o.name1} %26 ${o.name2}&body=Hi,%0A%0AYour hand-drawn shape variations for ${o.name1} %26 ${o.name2} are ready — please choose your favourite:%0A%0Ahttps://shapeofyourlove.com/choose.html?order=${o.id}%0A%0AWarm regards,%0AShape of Your Love">✉ Email customer</a>
           <span class="save-confirm" id="conf-${o.id}">✓ Saved</span>
         </div>
       </div>
@@ -292,31 +308,83 @@ function orderCard(o) {
 }
 
 function toggleCard(id) {
-  const body = document.getElementById('body-' + id);
-  const chev = document.getElementById('chev-' + id);
-  body.classList.toggle('open');
-  chev.classList.toggle('open');
+  document.getElementById('body-'+id).classList.toggle('open');
+  document.getElementById('chev-'+id).classList.toggle('open');
+}
+
+function handleFileSelect(orderId, slotIndex, input) {
+  if (!input.files[0]) return;
+  if (!pendingUploads[orderId]) pendingUploads[orderId] = [null,null,null];
+  pendingUploads[orderId][slotIndex] = input.files[0];
+  // Preview
+  const slot = document.getElementById(`slot-${orderId}-${slotIndex}`);
+  const reader = new FileReader();
+  reader.onload = e => {
+    slot.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:contain;padding:.5rem"/>
+      <div class="slot-label">Variation ${slotIndex+1}</div>
+      <input type="file" accept="image/*" onchange="handleFileSelect('${orderId}',${slotIndex},this)"/>`;
+    slot.classList.add('has-image');
+  };
+  reader.readAsDataURL(input.files[0]);
+  // Enable upload button if at least 1 file
+  const btn = document.getElementById(`btn-upload-${orderId}`);
+  if (btn && pendingUploads[orderId].some(f => f)) btn.disabled = false;
+}
+
+async function uploadShapes(orderId) {
+  const files = pendingUploads[orderId];
+  if (!files || !files.some(f => f)) return;
+  const btn = document.getElementById(`btn-upload-${orderId}`);
+  btn.disabled = true;
+  btn.textContent = 'Uploading...';
+
+  const urls = [];
+  for (let i = 0; i < 3; i++) {
+    if (!files[i]) continue;
+    const path = `${orderId}/variation-${i+1}-${Date.now()}.jpg`;
+    const { error } = await db.storage.from('shapes').upload(path, files[i], { upsert: true });
+    if (error) { alert('Upload failed for variation ' + (i+1)); btn.disabled = false; btn.textContent = 'Upload & send to customer'; return; }
+    const { data: urlData } = db.storage.from('shapes').getPublicUrl(path);
+    urls.push(urlData.publicUrl);
+  }
+
+  // Save URLs to order
+  const { error: updateError } = await db.from('orders').update({ shape_urls: urls, status: 'shapes_sent' }).eq('id', orderId);
+  if (updateError) { alert('Failed to save URLs'); return; }
+
+  // Update local
+  const order = allOrders.find(o => o.id === orderId);
+  if (order) { order.shape_urls = urls; order.status = 'shapes_sent'; }
+
+  const conf = document.getElementById(`upload-conf-${orderId}`);
+  conf.style.display = 'inline';
+  btn.textContent = '✓ Uploaded';
+
+  // Update status badge
+  const badge = document.querySelector(`#card-${orderId} .status-badge`);
+  if (badge) { badge.className = 'status-badge status-shapes_sent'; badge.textContent = 'Shapes sent'; }
+}
+
+function copyChooseLink(orderId) {
+  const link = `https://shapeofyourlove.com/choose.html?order=${orderId}`;
+  navigator.clipboard.writeText(link);
+  const btn = event.target;
+  btn.textContent = '✓ Copied!';
+  setTimeout(() => btn.textContent = '⧉ Copy customer link', 2000);
 }
 
 async function saveOrder(id) {
-  const status = document.getElementById('status-' + id).value;
-  const notes = document.getElementById('notes-' + id).value;
+  const status = document.getElementById('status-'+id).value;
+  const notes = document.getElementById('notes-'+id).value;
   const { error } = await db.from('orders').update({ status, notes }).eq('id', id);
   if (!error) {
-    const conf = document.getElementById('conf-' + id);
+    const conf = document.getElementById('conf-'+id);
     conf.style.display = 'inline';
     setTimeout(() => conf.style.display = 'none', 2500);
-    // Update local data
     const order = allOrders.find(o => o.id === id);
     if (order) { order.status = status; order.notes = notes; }
-    // Update badge in header
-    const card = document.getElementById('card-' + id);
-    const badge = card.querySelector('.status-badge');
-    badge.className = 'status-badge status-' + status;
-    badge.textContent = statusLabel(status);
-  } else {
-    alert('Save failed. Check console.');
-    console.error(error);
+    const badge = document.querySelector(`#card-${id} .status-badge`);
+    if (badge) { badge.className = 'status-badge status-'+status; badge.textContent = statusLabels[status]||status; }
   }
 }
 </script>
