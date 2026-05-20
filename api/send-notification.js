@@ -1,16 +1,27 @@
 export default async function handler(req, res) {
-  // Allow CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { name1, name2, jewelry_type, material, price, email, paypal_order_id } = req.body;
+  const { name1, name2, jewelry_type, material, price, email, paypal_order_id,
+          shipping_name, shipping_address1, shipping_address2, shipping_city, shipping_postal, shipping_country } = req.body;
 
   const RESEND_KEY = 're_78R4rzBd_EA9fE9Qgjurp3HKahSMKKA8i';
   const ARTIST_EMAIL = 'madtparty@gmail.com';
   const FROM = 'Shape of Your Love <hello@shapeofyourlove.com>';
+
+  const shippingBlock = `
+    <tr style="border-bottom:1px solid rgba(28,26,23,0.12);">
+      <td style="padding:.6rem 0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#4A4540;vertical-align:top;">Ship to</td>
+      <td style="padding:.6rem 0;text-align:right;font-size:.85rem;line-height:1.7;">
+        ${shipping_name}<br>
+        ${shipping_address1}${shipping_address2 ? '<br>' + shipping_address2 : ''}<br>
+        ${shipping_city}${shipping_postal ? ' ' + shipping_postal : ''}<br>
+        ${shipping_country}
+      </td>
+    </tr>`;
 
   try {
     // 1. Notify artist
@@ -28,15 +39,15 @@ export default async function handler(req, res) {
             <table style="width:100%;border-collapse:collapse;margin-bottom:1.5rem;">
               <tr style="border-bottom:1px solid rgba(28,26,23,0.12);">
                 <td style="padding:.6rem 0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#4A4540;">Names</td>
-                <td style="padding:.6rem 0;text-align:right;font-size:1rem;">${name1} & ${name2}</td>
+                <td style="padding:.6rem 0;text-align:right;">${name1} & ${name2}</td>
               </tr>
               <tr style="border-bottom:1px solid rgba(28,26,23,0.12);">
                 <td style="padding:.6rem 0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#4A4540;">Jewelry type</td>
-                <td style="padding:.6rem 0;text-align:right;font-size:1rem;">${jewelry_type}</td>
+                <td style="padding:.6rem 0;text-align:right;">${jewelry_type}</td>
               </tr>
               <tr style="border-bottom:1px solid rgba(28,26,23,0.12);">
                 <td style="padding:.6rem 0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#4A4540;">Material</td>
-                <td style="padding:.6rem 0;text-align:right;font-size:1rem;">${material}</td>
+                <td style="padding:.6rem 0;text-align:right;">${material}</td>
               </tr>
               <tr style="border-bottom:1px solid rgba(28,26,23,0.12);">
                 <td style="padding:.6rem 0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#4A4540;">Amount paid</td>
@@ -44,8 +55,9 @@ export default async function handler(req, res) {
               </tr>
               <tr style="border-bottom:1px solid rgba(28,26,23,0.12);">
                 <td style="padding:.6rem 0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#4A4540;">Customer email</td>
-                <td style="padding:.6rem 0;text-align:right;font-size:.9rem;color:#3A5A8B;">${email}</td>
+                <td style="padding:.6rem 0;text-align:right;color:#3A5A8B;">${email}</td>
               </tr>
+              ${shippingBlock}
               <tr>
                 <td style="padding:.6rem 0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#4A4540;">PayPal ID</td>
                 <td style="padding:.6rem 0;text-align:right;font-size:.75rem;opacity:.5;">${paypal_order_id}</td>
@@ -53,8 +65,7 @@ export default async function handler(req, res) {
             </table>
             <a href="https://shapeofyourlove.com/dashboard.html" style="display:inline-block;background:#1C1A17;color:#F7F3EE;text-decoration:none;padding:.9rem 2rem;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;">View in Dashboard →</a>
             <p style="margin-top:2rem;font-family:Arial,sans-serif;font-size:11px;color:#4A4540;opacity:.6;">Shape of Your Love · shapeofyourlove.com</p>
-          </div>
-        `
+          </div>`
       })
     });
 
@@ -84,9 +95,18 @@ export default async function handler(req, res) {
                 <td style="padding:.6rem 0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#4A4540;">Material</td>
                 <td style="padding:.6rem 0;text-align:right;">${material}</td>
               </tr>
-              <tr>
+              <tr style="border-bottom:1px solid rgba(28,26,23,0.12);">
                 <td style="padding:.6rem 0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#4A4540;">Total paid</td>
                 <td style="padding:.6rem 0;text-align:right;color:#A8895A;">$${price}</td>
+              </tr>
+              <tr>
+                <td style="padding:.6rem 0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#4A4540;vertical-align:top;">Shipping to</td>
+                <td style="padding:.6rem 0;text-align:right;font-size:.85rem;line-height:1.7;">
+                  ${shipping_name}<br>
+                  ${shipping_address1}${shipping_address2 ? '<br>' + shipping_address2 : ''}<br>
+                  ${shipping_city}${shipping_postal ? ' ' + shipping_postal : ''}<br>
+                  ${shipping_country}
+                </td>
               </tr>
             </table>
             <div style="background:#EDE6DB;padding:1.5rem;margin-bottom:1.5rem;border-left:3px solid #A8895A;">
@@ -106,14 +126,13 @@ export default async function handler(req, res) {
                 </tr>
                 <tr>
                   <td style="padding:.5rem 0;font-family:Georgia,serif;color:#A8895A;font-size:1rem;vertical-align:top;">Day 7</td>
-                  <td style="padding:.5rem 0;font-family:Arial,sans-serif;font-size:.8rem;color:#4A4540;line-height:1.6;">Your piece ships. Tracking details sent to this email.</td>
+                  <td style="padding:.5rem 0;font-family:Arial,sans-serif;font-size:.8rem;color:#4A4540;line-height:1.6;">Your piece ships to ${shipping_city}, ${shipping_country}. Tracking details sent to this email.</td>
                 </tr>
               </table>
             </div>
             <p style="font-family:Arial,sans-serif;font-size:.8rem;color:#4A4540;line-height:1.8;">Questions? Reply to this email and we'll get back to you.</p>
             <p style="margin-top:2rem;font-family:Arial,sans-serif;font-size:11px;color:#4A4540;opacity:.6;">Shape of Your Love · shapeofyourlove.com</p>
-          </div>
-        `
+          </div>`
       })
     });
 
