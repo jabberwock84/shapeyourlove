@@ -317,6 +317,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 2rem;display:
       <input class="form-input" type="email" id="input-email" placeholder="your@email.com"/>
     </div>
 
+    <div style="margin-bottom:1.5rem;">
+      <label class="form-label" style="margin-bottom:1rem;display:block;">Shipping address</label>
+      <input class="form-input" type="text" id="input-fullname" placeholder="Full name" style="margin-bottom:.75rem;"/>
+      <input class="form-input" type="text" id="input-address1" placeholder="Address line 1" style="margin-bottom:.75rem;"/>
+      <input class="form-input" type="text" id="input-address2" placeholder="Address line 2 (optional)" style="margin-bottom:.75rem;"/>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem;">
+        <input class="form-input" type="text" id="input-city" placeholder="City" style="margin-bottom:0;"/>
+        <input class="form-input" type="text" id="input-postal" placeholder="Postal code" style="margin-bottom:0;"/>
+      </div>
+      <input class="form-input" type="text" id="input-country" placeholder="Country" style="margin-bottom:0;"/>
+    </div>
+
     <div id="paypal-button-container"></div>
     <p class="paypal-note">Secure payment via PayPal · Your card details are never stored</p>
 
@@ -359,7 +371,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 2rem;display:
 <script>
 // State
 const order = {
-  name1: '', name2: '', type: '', material: '', price: 0, email: ''
+  name1: '', name2: '', type: '', material: '', price: 0, email: '',
+  fullname: '', address1: '', address2: '', city: '', postal: '', country: ''
 };
 
 // Read URL params from landing page
@@ -447,18 +460,37 @@ function renderPayPal() {
     },
     createOrder: function(data, actions) {
       const email = document.getElementById('input-email').value.trim();
+      const fullname = document.getElementById('input-fullname').value.trim();
+      const address1 = document.getElementById('input-address1').value.trim();
+      const city = document.getElementById('input-city').value.trim();
+      const country = document.getElementById('input-country').value.trim();
+
+      // Validate email
       if(!email || !email.includes('@')) {
-        const emailInput = document.getElementById('input-email');
-        emailInput.style.borderColor = '#A8895A';
-        emailInput.placeholder = 'Please enter your email to continue';
-        emailInput.focus();
-        setTimeout(() => {
-          emailInput.style.borderColor = '';
-          emailInput.placeholder = 'your@email.com';
-        }, 3000);
+        const el = document.getElementById('input-email');
+        el.style.borderColor = '#A8895A';
+        el.placeholder = 'Please enter your email to continue';
+        el.focus();
+        setTimeout(() => { el.style.borderColor = ''; el.placeholder = 'your@email.com'; }, 3000);
+        return;
+      }
+      // Validate shipping
+      if(!fullname || !address1 || !city || !country) {
+        ['input-fullname','input-address1','input-city','input-country'].forEach(id => {
+          const el = document.getElementById(id);
+          if(!el.value.trim()) el.style.borderColor = '#A8895A';
+          setTimeout(() => el.style.borderColor = '', 3000);
+        });
+        document.getElementById('input-fullname').focus();
         return;
       }
       order.email = email;
+      order.fullname = fullname;
+      order.address1 = address1;
+      order.address2 = document.getElementById('input-address2').value.trim();
+      order.city = city;
+      order.postal = document.getElementById('input-postal').value.trim();
+      order.country = country;
       return actions.order.create({
         purchase_units: [{
           description: 'Shape of Your Love — ' + order.name1 + ' & ' + order.name2 + ' — ' + order.type + ' — ' + order.material,
@@ -486,7 +518,13 @@ function renderPayPal() {
               material: order.material,
               price: order.price,
               email: order.email,
-              paypal_order_id: details.id
+              paypal_order_id: details.id,
+              shipping_name: order.fullname,
+              shipping_address1: order.address1,
+              shipping_address2: order.address2,
+              shipping_city: order.city,
+              shipping_postal: order.postal,
+              shipping_country: order.country
             })
           });
         } catch(e) { console.error('Email error:', e); }
@@ -505,7 +543,13 @@ function renderPayPal() {
             price: order.price,
             email: order.email,
             paypal_order_id: details.id,
-            status: 'new'
+            status: 'new',
+            shipping_name: order.fullname,
+            shipping_address1: order.address1,
+            shipping_address2: order.address2,
+            shipping_city: order.city,
+            shipping_postal: order.postal,
+            shipping_country: order.country
           });
         } catch(e) { console.error('Supabase save error:', e); }
         // Show confirmation

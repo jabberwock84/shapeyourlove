@@ -49,6 +49,30 @@ export default async function handler(req, res) {
       })
     });
 
+    // Also email customer confirming their choice
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: FROM,
+        to: email,
+        subject: `Your shape is confirmed — ${name1} & ${name2}`,
+        html: `
+          <div style="font-family:Georgia,serif;max-width:520px;margin:0 auto;padding:2rem;background:#F7F3EE;color:#1C1A17;">
+            <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#A8895A;margin-bottom:1.5rem;">Shape of Your Love</div>
+            <h1 style="font-size:2rem;font-weight:300;margin:0 0 .5rem;line-height:1.2;">Beautiful choice.<br><em style="color:#A8895A;">We're on it.</em></h1>
+            <p style="font-family:Arial,sans-serif;font-size:.85rem;color:#4A4540;line-height:1.8;margin:1.5rem 0;">You've chosen <strong>Variation ${variation}</strong> for <strong>${name1} & ${name2}</strong>. We're now beginning the casting process.</p>
+            ${shape_url ? `<img src="${shape_url}" style="width:100%;max-width:280px;display:block;margin:0 auto 1.5rem;border:1px solid rgba(28,26,23,0.12);padding:1rem;background:white;" alt="Your chosen shape"/>` : ''}
+            <div style="background:#EDE6DB;padding:1.5rem;margin-bottom:1.5rem;border-left:3px solid #A8895A;">
+              <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#A8895A;margin-bottom:.75rem;">What happens next</div>
+              <p style="font-family:Arial,sans-serif;font-size:.82rem;color:#4A4540;line-height:1.7;margin:0;">Your chosen shape is now being cast in <strong>${material}</strong> using the lost-wax method and polished by hand. We'll email you with tracking details when it ships — usually within 2–3 days.</p>
+            </div>
+            <p style="font-family:Arial,sans-serif;font-size:.8rem;color:#4A4540;line-height:1.8;">Questions? Reply to this email and we'll get back to you.</p>
+            <p style="margin-top:2rem;font-family:Arial,sans-serif;font-size:11px;color:#4A4540;opacity:.6;">Shape of Your Love · shapeofyourlove.com</p>
+          </div>`
+      })
+    });
+
     return res.status(200).json({ success: true });
   } catch(err) {
     console.error(err);
