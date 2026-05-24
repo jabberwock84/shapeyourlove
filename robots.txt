@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+Disallow: /choose.html
+
+Sitemap: https://shapeofyourlove.com/sitemap.xml
