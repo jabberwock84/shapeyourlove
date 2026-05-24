@@ -126,7 +126,7 @@ export default async function handler(req, res) {
                 </tr>
                 <tr>
                   <td style="padding:.5rem 0;font-family:Georgia,serif;color:#A8895A;font-size:1rem;vertical-align:top;">Day 7</td>
-                  <td style="padding:.5rem 0;font-family:Arial,sans-serif;font-size:.8rem;color:#4A4540;line-height:1.6;">Your piece ships to ${shipping_city}, ${shipping_country}. Tracking details sent to this email.</td>
+                  <td style="padding:.5rem 0;font-family:Arial,sans-serif;font-size:.8rem;color:#4A4540;line-height:1.6;">Your piece ships to ${shipping_city}, ${shipping_country} within 7 days of casting. Tracking details sent to this email.</td>
                 </tr>
               </table>
             </div>
